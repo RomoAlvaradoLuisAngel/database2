@@ -4,13 +4,13 @@ def DashboardView(page, tarea_controller):
     user = page.session.get("user")
     lista_tareas = ft.Column(scroll=ft.ScrollMode.ALWAYS, expand=True)
     
-    def refres():
+    def refresh():
         lista_tareas.controls.clear()
-        for t in tareas_controller.obtener_lista(user['id_usuario']):
+        for t in tarea_controller.obtener_lista(user['id_usuario']):
             lista_tareas.controls.append(
                 ft.Card(
                     content=ft.Container(
-                        content=ft.ListTole(
+                        content=ft.ListTile(
                             title=ft.Text(t['titulo'], weight="bold"),
                             subtitle=ft.Text(f"{t['descripcion']}\nPrioridad: {t['prioridad']}"),
                             trailing=ft.Badge(content=ft.Text(t['estado']), bgcolor=ft.Colors.ORANGE_300)
@@ -19,3 +19,24 @@ def DashboardView(page, tarea_controller):
                 )
             )
         page.update()
+        
+    txt_titulo = ft.TextField(label="Nueav tarea", expand=True)
+    
+    def add_task(e):
+        success, msg = tarea_controller.guardar_nueva(user['id_usuario'], txt_titulo.value, "", "media", "trabajo")
+        if success:
+            txt_titulo.value = ""
+            refresh()
+            
+    return ft.View("/dashboard", [
+        ft.AppBar(
+            title=ft.Text(f"Bienvenido, {user['nombre']}"),
+            actions=[ft.IconButton(ft.Icons.EXIT_TO_APP, on_click=lambda _: page.go("/"))]
+        ),
+        ft.Column([
+            ft.Row([txt_titulo, ft.FloatingActionButton(icon=ft.Icons.ADD, on_click=add_task)]),
+            ft.Divider(),
+            ft.Text("Mis tareas pendientes", size=20. weight="bold"),
+            lista_tareas
+        ], expand=True, padding=20)
+    ], on_open=lambda _: refresh())
