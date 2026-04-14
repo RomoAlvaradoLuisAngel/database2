@@ -14,7 +14,7 @@ class UsuarioModel:
         cursor = conn.cursor()
         try:
             cursor.execute(
-                "INSERT INTO usuario (nombre, email, password) VALUES (%s, %s, %s)"
+                "INSERT INTO usuario (nombre, email, password) VALUES (%s, %s, %s)",
                 (usuario_data.nombre, usuario_data.email, hashed_pw.decode('utf-8'))
             )
             conn.commit()
@@ -32,6 +32,6 @@ class UsuarioModel:
         user = cursor.fetchone()
         conn.close()
         
-        if user and bcrypt.checlpw(password.encode('utf-8'), user['password'].encode('utf-8')):
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
             return user
         return home

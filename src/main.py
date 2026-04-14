@@ -5,7 +5,7 @@ from views.LoginView import LoginView
 from views.dashboard import DashboardView
 
 #uv sync
-def main(page: ft.Page):
+def start(page: ft.Page):
     auth_ctrl = AuthController()
     task_ctrl = TareaController()
     
