@@ -34,4 +34,4 @@ class UsuarioModel:
         
         if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
             return user
-        return home
+        return None
