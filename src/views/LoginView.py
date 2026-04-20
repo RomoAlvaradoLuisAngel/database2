@@ -5,6 +5,13 @@ def LoginView(page: ft.Page, auth_controller):
     pass_input = ft.TextField(label="Constraseña", password=True, can_reveal_password=True, width=150, border_radius=10)
     
     def login_click(e):
+        if not email_input.value or not pass_input.value:
+            page.snack_bar = ft.Snack_bar = ft.SnackBar(ft.Text("Por favor, llene todos los campos"))
+            page.snack_bar.open = True
+            page.update()
+            return
+
+        user, msg = auth_controller.login
         
     
     return ft.View("/", [
