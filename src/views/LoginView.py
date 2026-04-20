@@ -11,18 +11,38 @@ def LoginView(page: ft.Page, auth_controller):
             page.update()
             return
 
-        user, msg = auth_controller.login
+        user, msg = auth_controller.login(email_input.value, pass_input.value)
+        
+        if user:
+            page.session.set("user", user)
+            page.go("/dashboard")
+        else: 
+            page.snack_bar = ft.SnackBar(ft.Text(msg))
+            page.snack_bar.open = True
+            page.update()
+            
+    login_button = ft.ElevatedButton("Entrar", on_click=login_click, width=350, bgcolor="blue", color = "white")
+    
+    pass_input.on_submit = login_click
         
     
-    return ft.View("/", [
-        ft.AppBar(title=ft.Text("SIGE - Login"), bgcolor = ft.Colors.BLUE_GREY_900, color="white"),
-        ft.Column([
-            ft.Icon(ft.Icons.LOCK_PERSON, size = 50, color=ft.Colors.BLUE),
-            ft.Text("Acceso al sistema", size=24, weight="bold"),
-            email_input,
-            pass_input,
-            ft.ElevatedButton("Entrar", on_click=login_click, width=350),
-            ft.TextButton("Crear una cuenta nueva", on_click=lambda _: page.go("/registro"))
-        ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, alignment=ft.MainAxisAlignment.CENTER)
-    ])
-    
+    return ft.View(
+        route = "/",
+        vertical_alignment=ft.MainAxisAlignment.CENTER,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        appbar=ft.AppBar(title=ft.Text("SIGE - login"), bgcolor="bluegrey900", color= "white"),
+        controls=[
+            ft.Column(
+                [
+                    ft.Text("Acceso al sistema", size=24, weight="bold"),
+                    email_input,
+                    pass_input,
+                    login_button,
+                    ft.TextButton("Crear una nueva cuenta", on_click=lambda _: page.go("/registro"))
+                ],
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                tight=True,
+                spacing=20
+            )
+        ]
+    )
