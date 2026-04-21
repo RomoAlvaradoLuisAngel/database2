@@ -6,7 +6,7 @@ from views.dashboard import DashboardView
 
 #uv sync
 def start(page: ft.Page):
-    page.title="Sistema mid"
+    page.title="Sistema de inicio de sesion"
     page.window_width = 450
     page.window_height = 700
     
