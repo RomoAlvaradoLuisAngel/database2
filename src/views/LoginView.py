@@ -1,4 +1,6 @@
 import flet as ft
+USUARIO_VALIDO="admin"
+CONTRASEñA_VALIDA = "123456"
 
 def LoginView(page: ft.Page, auth_controller):
     email_input = ft.TextField(label="Correo Electronico", width = 350, border_radius=10)
@@ -6,9 +8,17 @@ def LoginView(page: ft.Page, auth_controller):
     
     def login_click(e):
         if not email_input.value or not pass_input.value:
-            page.snack_bar = ft.Snack_bar = ft.SnackBar(ft.Text("Por favor, llene todos los campos"))
+            page.snack_bar = ft.SnackBar(ft.Text("Por favor, llene todos los campos"))
             page.snack_bar.open = True
             page.update()
+        usuario = email_input.value
+        contrasena = pass_input.value
+        
+        if usuario == USUARIO_VALIDO and contrasena == CONTRASEñA_VALIDA:
+            page.show_dialog(ft.SnackBar(ft.Text("Inicio de sesion exitoso.")))
+            mostrar_dashboard()
+        else:
+            page.show_dialog(ft.SnackBar(ft.Text("Usuario o contraseña erronea.")))
             return
 
         user, msg = auth_controller.login(email_input.value, pass_input.value)
@@ -21,8 +31,8 @@ def LoginView(page: ft.Page, auth_controller):
             page.snack_bar.open = True
             page.update()
             
-    login_button = ft.ElevatedButton("Entrar", on_click=login_click, width=350, bgcolor="blue", color = "white")
-    registrar = ft.ElevatedButton("Crear una nueva cuenta", bgcolor="green", color = "white", on_click=lambda _: page.go("/registro"))
+    login_button = ft.ElevatedButton("Entrar", on_click=login_click, width=350, bgcolor="cyan", color = "white")
+    registrar = ft.ElevatedButton("Crear una nueva cuenta", bgcolor="cyan", color = "white", width=350, on_click=lambda _: page.go("/registro"))
     pass_input.on_submit = login_click
         
     
@@ -30,7 +40,7 @@ def LoginView(page: ft.Page, auth_controller):
         route = "/",
         vertical_alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-        appbar=ft.AppBar(title=ft.Text("SIGE - login"), bgcolor="bluegrey900", color= "white"),
+        appbar=ft.AppBar(title=ft.Text("SIGE - login - que ya cruz azul gane :("), bgcolor="bluegrey900", color= "white"),
         controls=[
             ft.Column(
                 [
