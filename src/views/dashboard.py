@@ -20,7 +20,7 @@ def DashboardView(page, tarea_controller):
             )
         page.update()
         
-    txt_titulo = ft.TextField(label="Nueav tarea", expand=True)
+    txt_titulo = ft.TextField(label="Nueva tarea", expand=True)
     
     def add_task(e):
         success, msg = tarea_controller.guardar_nueva(user['id_usuario'], txt_titulo.value, "", "media", "trabajo")

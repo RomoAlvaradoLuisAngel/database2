@@ -16,7 +16,7 @@ def LoginView(page: ft.Page, auth_controller):
         
         if usuario == USUARIO_VALIDO and contrasena == CONTRASEñA_VALIDA:
             page.show_dialog(ft.SnackBar(ft.Text("Inicio de sesion exitoso.")))
-            mostrar_dashboard()
+            page.go("/dashboard")
         else:
             page.show_dialog(ft.SnackBar(ft.Text("Usuario o contraseña erronea.")))
             return
