@@ -2,7 +2,7 @@ import flet as ft
 from controllers.UserController import AuthController
 from controllers.TareasController import TareaController
 from views.LoginView import LoginView
-from views.dashboard import DashboardView
+from views.dashboardView import DashboardView
 
 #uv sync
 def start(page: ft.Page):
@@ -18,7 +18,7 @@ def start(page: ft.Page):
         
         # caso 1: login
         if page.route == "/":
-            page.views.append(LoginView(page, task_ctrl))
+            page.views.append(LoginView(page, auth_ctrl))
             
         elif page.route == "/dashboard":
             page.views.append(DashboardView(page, task_ctrl))
@@ -35,12 +35,13 @@ def start(page: ft.Page):
     def view_pop(e):
         if len(page.views) > 1:
             page.views.pop()
-            top_view = page.view[-1]
+            top_view = page.views[-1]
             page.go(top_view.route)
     
     #1. asignar los manejadores de evento primero
     page.on_route_change = route_change
     page.on_view_pop = view_pop
+    page.user_data = None
     
     #2. IMPORTANTE, no fuerces page.route = ""
     print("Iniciando navegacion....")
