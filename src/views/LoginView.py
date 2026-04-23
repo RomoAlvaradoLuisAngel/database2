@@ -12,6 +12,30 @@ def LoginView(page: ft.Page, AuthController):
             page.snack_bar.open = True
             page.update()
             return
+
+        def mostrar_dashboard():
+            page.clean()  # limpia la pantalla
+
+            page.add(
+                ft.AppBar(
+                    title=ft.Text("Panel principal"),
+                    bgcolor=ft.Colors.BLUE_900,
+                    color=ft.Colors.WHITE
+                ),
+                ft.Column(
+                    [
+                        ft.Icon(ft.Icons.BOLT, color=ft.Colors.YELLOW, size=100),
+                        ft.Text("Bienvenido al sistema."),
+                        ft.Text("Has iniciado sesion correctamente.")
+                    ],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    expand=True
+                )
+            )
+
+            page.update()
+        
         
         usuario = email_input.value
         contrasena = pass_input.value
@@ -22,11 +46,11 @@ def LoginView(page: ft.Page, AuthController):
                 "id_usuario": 1
             }
             page.show_dialog(ft.SnackBar(ft.Text("Inicio de sesion exitoso.")))
-            page.go("/dashboard")
+            page.go(mostrar_dashboard)
             return
                     
-    login_button = ft.ElevatedButton("Entrar", on_click=login_click, width=350, bgcolor="blue", color = "white")
-    registrar_button = ft.ElevatedButton("Crear una nueva cuenta", on_click=lambda _: page.go("/registro"), width=350, bgcolor="green", color = "white")
+    login_button = ft.ElevatedButton("Entrar", on_click=login_click, width=350, bgcolor="cyan", color = "black", icon=(ft.Icon(ft.Icons.MAIL, color=ft.Colors.WHITE, size=25)))
+    registrar_button = ft.ElevatedButton("Crear una nueva cuenta", on_click=lambda _: page.go("/registro"), width=350, bgcolor="green", color = "black", icon=(ft.Icon(ft.Icons.PASSWORD, color=ft.Colors.WHITE, size=25)))
     
     pass_input.on_submit = login_click
         
@@ -35,7 +59,7 @@ def LoginView(page: ft.Page, AuthController):
         route = "/",
         vertical_alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-        appbar=ft.AppBar(title=ft.Text("LOGIN"), bgcolor="green", color= "white"),
+        appbar=ft.AppBar(title=ft.Text("SIGE - Login - Cuando va a ganar el cruz azul bebe"), bgcolor="green", color= "white"),
         controls=[
             ft.Column(
                 [
