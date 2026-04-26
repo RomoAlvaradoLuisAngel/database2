@@ -8,7 +8,7 @@ class TareaModel:
         conn = self.db.get_connection()
         cursor = conn.cursor(dictionary=True)
         query = "SELECT * FROM tareas WHERE id_usuario = %s ORDER BY fecha_limite ASC"
-        cursor.execute(query, (id_usuario),)
+        cursor.execute(query, (id_usuario,))
         resultado = cursor.fetchall()
         conn.close()
         return resultado

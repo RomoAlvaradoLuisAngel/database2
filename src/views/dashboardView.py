@@ -1,7 +1,7 @@
 import flet as ft
 
 def DashboardView(page, tarea_controller):
-    user = page.user_data
+    user = page.user_data if page.user_data else {"nombre": "Usuario", "id_usuario": 1}
     lista_tareas = ft.Column(scroll=ft.ScrollMode.ALWAYS, expand=True)
     
     def refresh():
@@ -27,16 +27,35 @@ def DashboardView(page, tarea_controller):
         if success:
             txt_titulo.value = ""
             refresh()
+            #ignorar esta parte es de ia
+    try:   
+        tareas_db = tarea_controller.obtener_lista(user['id_usuario'])
+        for t in tareas_db:
+            lista_tareas.controls.append(
+                ft.Card(
+                    content=ft.Container(
+                        content=ft.ListTile(
+                            title=ft.Text(t['titulo'], weight="bold"),
+                            subtitle=ft.Text(t['descripcion'] if t['descripcion'] else "Sin descripción")
+                        ), padding=10
+                    )
+                )
+            )
+    except Exception as ex:
+        print(f"Error inicial: {ex}")
+        lista_tareas.controls.append(ft.Text("Error al conectar con la base de datos"))        
             
-    return ft.View("/dashboard", [
-        ft.AppBar(
+    return ft.View(
+        route="/dashboard", 
+        appbar= ft.AppBar(
             title=ft.Text(f"Bienvenido, {user['nombre']}"),
             actions=[ft.IconButton(ft.Icons.EXIT_TO_APP, on_click=lambda _: page.go("/"))]
         ),
-        ft.Column([
-            ft.Row([txt_titulo, ft.FloatingActionButton(icon=ft.Icons.ADD, on_click=add_task)]),
-            ft.Divider(),
-            ft.Text("Mis tareas pendientes", size=20, weight="bold"),
-            lista_tareas
-        ], expand=True)
-    ])
+        controls=[
+            ft.Column([
+                ft.Row([txt_titulo, ft.FloatingActionButton(icon=ft.Icons.ADD, on_click=add_task)]),
+                ft.Divider(),
+                ft.Text("Mis tareas pendientes", size=20, weight="bold"),
+                lista_tareas
+            ], expand=True)
+        ])
