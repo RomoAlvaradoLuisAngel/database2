@@ -52,6 +52,11 @@ class UsuarioModel:
             else:
                 return False
             
-        except mysql.connector
+        except mysql.connector.Error as err:
+            print(f"Error en la base de datos: {err}")
+            return False
+        finally:
+            if cursor: cursor.close()
+            if conn: conn.close()
             
             
