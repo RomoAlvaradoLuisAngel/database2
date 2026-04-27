@@ -33,7 +33,7 @@ def LoginView(page: ft.Page, auth_controller):
         route = "/",
         vertical_alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-        appbar=ft.AppBar(title=ft.Text("SIGE - Login - Cuando va a ganar el cruz azul bebe"), bgcolor="green", color= "white"),
+        appbar=ft.AppBar(title=ft.Text("SIGE - Login - Cuando va a ganar el cruz azul - ya gano😍"), bgcolor="green", color= "white"),
         controls=[
             ft.Column(
                 [

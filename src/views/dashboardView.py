@@ -13,8 +13,10 @@ def DashboardView(page, tarea_controller):
                         content=ft.ListTile(
                             title=ft.Text(t['titulo'], weight="bold"),
                             subtitle=ft.Text(f"{t['descripcion']}\nPrioridad: {t['prioridad']}"),
-                            trailing=ft.Badge(content=ft.Text(t['estado']), bgcolor=ft.Colors.ORANGE_300)
-                        ), padding=10
+                            trailing=ft.Text(t['estado'])
+                        ), 
+                        padding=10,
+                        bgcolor=ft.Colors.ORANGE_300
                     )
                 )
             )

@@ -15,8 +15,8 @@ class AuthController:
         except ValidationError as e:
             #retorna el primer error de validacion encotrado
             return False, e.errors()[0]['msg']
+    
     # esto es de ia (entendiendole)
-        
     def login(self, email, password):
         try:
             conn = self.model.db.get_connection()
