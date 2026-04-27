@@ -35,3 +35,23 @@ class UsuarioModel:
         if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
             return user
         return None
+    
+    def inciar_sesion(self, usuario_data):
+        conn=None
+        cursor=None
+        try:
+            conn = mysql.connector.connect(**self.db_config)
+            cursor = conn.cursor(dictionary=True)
+            query= "SELECT * FROM usuario WHERE email=%s AND contraseña = %s"
+            values= (usuario_data.email, usuario_data.contraseña)
+            cursor.execute(query, values)
+            usuario_encontrado = cursor.fetchone()
+            
+            if usuario_encontrado:
+                return True
+            else:
+                return False
+            
+        except mysql.connector
+            
+            

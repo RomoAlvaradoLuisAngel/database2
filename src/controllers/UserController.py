@@ -16,25 +16,16 @@ class AuthController:
             #retorna el primer error de validacion encotrado
             return False, e.errors()[0]['msg']
     
-    # esto es de ia (entendiendole)
     def login(self, email, password):
         try:
-            conn = self.model.db.get_connection()
-            cursor = conn.cursor(dictionary=True)
-
-            query = "SELECT * FROM usuario WHERE email=%s AND password=%s"
-            cursor.execute(query, (email, password))
-
-            user = cursor.fetchone()
-
-            cursor.close()
-            conn.close()
-
-            if user:
-                return user, "Login correcto"
-            else:
-                return None, "Credenciales incorrectas"
-
+            usuario_login = UsuarioLogin(email = email, password = password)
+            if UsuarioLogin: 
+                success = self.model.iniciar_sesion(usuario_login)
+                if success:
+                    return True, "Inicio de sesion exitoso"
+            else: 
+                return False, "Credenciales incorrectas"
+                
         except Exception as e:
-            print("ERROR EN LOGIN:", e)  # 👈 ESTO ES CLAVE
+            print("ERROR EN LOGIN:", e)
             return None, str(e)
