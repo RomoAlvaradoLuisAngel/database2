@@ -11,9 +11,9 @@ def LoginView(page: ft.Page, auth_controller):
             page.update()
             return
         usuario = email_input.value
-        contrasena = pass_input.value
+        contraseña = pass_input.value
         
-        user, msg = auth_controller.login(usuario, contrasena)
+        user, msg = auth_controller.login(usuario, contraseña)
 
         if user:
             page.user_data = user
