@@ -42,17 +42,22 @@ class UsuarioModel:
         try:
             conn = mysql.connector.connect(**self.db_config)
             cursor = conn.cursor(dictionary=True)
-            query= "SELECT * FROM usuario WHERE email=%s AND contraseña = %s"
+            
+            query= "SELECT * FROM usuario WHERE email=%s"
             values= (usuario_data.email, usuario_data.contraseña)
+            
             cursor.execute(query, values)
             usuario_encontrado = cursor.fetchone()
             
             if usuario_encontrado:
-                return True
+                if bcrypt.checkpw((usuario_data.contraseña.encode('utg-8'), usuario_encontrado['contraseña'])):
+                    return True
+                else:
+                    return False
             else:
                 return False
             
-        except mysql.connector.Error as err:
+        except Exception as err:
             print(f"Error en la base de datos: {err}")
             return False
         finally:
