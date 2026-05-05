@@ -19,7 +19,7 @@ class UsuarioNuevo(BaseModel):
     email: EmailStr
     activo: bool = True
     password: str = Field(min_length=8)
-    fecha_registro: datetime = Field(defa)
+    fecha_registro: date
     ultimo_acceso: date
     nombre: str = Field(min_lenght=3, max_lenght=100)
     apellido: str = Field(min_lenght=3, max_lenght=100)

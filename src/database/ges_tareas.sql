@@ -66,7 +66,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `email`, `password`, `telefono`, `fecha_registro`, `ultimo_acceso`, `activo`, `foto_perfil`) VALUES
-(1, 'Admin', 'Principal', 'admin@gmail.com', '1234', NULL, '2026-03-23 00:34:06', NULL, 1, NULL);
+(1, 'Admin', 'Principal', 'admin@gmail.com', '123456789', NULL, '2026-03-23 00:34:06', NULL, 1, NULL);
 
 --
 -- Índices para tablas volcadas
