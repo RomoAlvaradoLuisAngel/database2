@@ -40,6 +40,10 @@ CREATE TABLE `tareas` (
   `prioridad` enum('baja','media','alta') DEFAULT 'media',
   `completada` tinyint(1) DEFAULT 0,
   `fecha_completada` timestamp NULL DEFAULT NULL
+  PRIMARY KEY (`id_tarea`),
+  KEY `idx_usuario` (`id_usuario`),
+  KEY `idx_estado` (`estado`),
+  KEY `idx_clasificacion` (`clasificacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
