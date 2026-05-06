@@ -3,6 +3,7 @@ from controllers.UserController import AuthController
 from controllers.TareasController import TareaController
 from views.LoginView import LoginView
 from views.dashboardView import DashboardView
+from views.RegistroView import RegistroView
 
 #uv sync
 def start(page: ft.Page):
@@ -19,6 +20,9 @@ def start(page: ft.Page):
         # caso 1: login
         if page.route == "/":
             page.views.append(LoginView(page, auth_ctrl))
+            
+        elif page.route == "/registrarse":
+            page.views.append(RegistroView(page, auth_ctrl))
             
         elif page.route == "/dashboard":
             page.views.append(DashboardView(page, task_ctrl))

@@ -14,8 +14,8 @@ class UsuarioModel:
         cursor = conn.cursor()
         try:
             cursor.execute(
-                "INSERT INTO usuario (nombre, email, password) VALUES (%s, %s, %s)",
-                (usuario_data.nombre, usuario_data.email, hashed_pw.decode('utf-8'))
+                "INSERT INTO usuario (nombre, apellido, email, password, activo) VALUES (%s, %s, %s, %s, %s)",
+                (usuario_data.nombre, usuario_data.apellido, usuario_data.email, hashed_pw.decode('utf-8'), 1)
             )
             conn.commit()
             return True
@@ -28,7 +28,7 @@ class UsuarioModel:
     def validar_login(self, email, password):
         conn = self.db.get_connection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM usuario WHERE email=%s")
+        cursor.execute("SELECT * FROM usuario WHERE email=%s", (email,))
         user = cursor.fetchone()
         conn.close()
         
@@ -36,26 +36,24 @@ class UsuarioModel:
             return user
         return None
     
-    def inciar_sesion(self, usuario_data):
+    def iniciar_sesion(self, usuario_data):
         conn=None
         cursor=None
         try:
-            conn = mysql.connector.connect(**self.db_config)
+            conn = self.db.get_connection()
             cursor = conn.cursor(dictionary=True)
             
             query= "SELECT * FROM usuario WHERE email=%s"
-            values= (usuario_data.email, usuario_data.contraseña)
-            
-            cursor.execute(query, values)
+            cursor.execute(query, (usuario_data.email,))
             usuario_encontrado = cursor.fetchone()
             
             if usuario_encontrado:
-                if bcrypt.checkpw((usuario_data.contraseña.encode('utg-8'), usuario_encontrado['contraseña'])):
-                    return True
-                else:
-                    return False
-            else:
-                return False
+                pw_usuario = usuario_data.password.encode('utf-8')
+                pw_base_datos = usuario_encontrado['password'].encode('utf-8')
+                
+                if bcrypt.checkpw(pw_usuario, pw_base_datos):
+                    return usuario_encontrado
+                return None
             
         except Exception as err:
             print(f"Error en la base de datos: {err}")
