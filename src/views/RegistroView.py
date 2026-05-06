@@ -27,8 +27,8 @@ def RegistroView(page: ft.Page, auth_controller):
             page.snack_bar.open = True
             page.update()
                         
-    registrarse_button = ft.ElevatedButton("Crear cuenta", on_click=registrarse_click, width=350, bgcolor="cyan", color = "black", icon=(ft.Icon(ft.Icons.MAIL, color=ft.Colors.WHITE, size=25)))
-    volver_button = ft.ElevatedButton("¿Ya tienes una cuenta?", on_click=lambda _: page.go("/"), width=350, bgcolor="green", color = "black", icon=(ft.Icon(ft.Icons.PASSWORD, color=ft.Colors.WHITE, size=25)))
+    registrarse_button = ft.ElevatedButton("Crear cuenta", on_click=registrarse_click, width=350, bgcolor="cyan", color = "black", icon=(ft.Icon(ft.Icons.CHECK, color=ft.Colors.WHITE, size=25)))
+    volver_button = ft.ElevatedButton("¿Ya tienes una cuenta?", on_click=lambda _: page.go("/"), width=350, bgcolor="green", color = "black", icon=(ft.Icon(ft.Icons.LOGIN, color=ft.Colors.WHITE, size=25)))
     
     pass_input.on_submit = registrarse_click
         
